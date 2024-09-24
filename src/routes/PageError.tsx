@@ -2,22 +2,29 @@ import { useRouteError } from "react-router-dom";
 import BackBtn from './../components/BackBtn';
 import classes from "./PageError.module.css";
 
+type ErrorResponse = {
+  status?: number;
+  statusText?: string;
+};
+
 const PageError = () => {
   const error = useRouteError();
   console.log({ error });
+
+  const errorResponse = error as ErrorResponse; 
 
   return (
     <div className={classes.error}>
       <h1>Ops!</h1>
       <p>Ops! Parece que algo deu errado.</p>
-      
+
       <p>
-        {error.status === 404 ? (
+        {errorResponse?.status === 404 ? (
           <span>
-            Página não encontrada <span className={classes.errorNumber}>{error.status}</span>
+            Página não encontrada <span className={classes.errorNumber}>{errorResponse.status}</span>
           </span>
         ) : (
-          <i>Status: {error.status}</i>
+          <i>Status: {errorResponse?.status}</i>
         )}
       </p>
       <BackBtn />
